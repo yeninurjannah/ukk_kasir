@@ -10,14 +10,19 @@ class User extends BaseController
     public function index()
     {
         $data = [
-            'akses' => session()->get('level')
+
+            'akses' => session()->get('level'),
+            'pendapatan_harian' =>  $this->penjualan->getPendapatanHarian(),
+            'dataStok' =>  $this->produk->getStokNol() 
         ];
-        return view('layout/tamplate', $data);
+        return view('dashboard-admin', $data);
     }
+
     public function login()
     {
         return view('login');
     }
+
 
     public function dataUser()
     {
@@ -170,6 +175,7 @@ class User extends BaseController
 
     public function logout()
     {
+        
         session()->destroy();
         return redirect()->to('/');
     }

@@ -60,19 +60,23 @@
                         <td>
                             <?= $k['level']?></td>
                         <td>
-                        <a href="<?=site_url('/edit-user/'.$k['id_user']);?>" title="edit"><i class="bi bi-pencil -square"></i></a>
-                          <a href="<?=site_url('/hapus-user/'.$k['id_user']);?>" title="hapus"><i class="bi bi-trash"></i></a>
-                         
+                        <a href="<?=site_url('/edit-user/'.$k['id_user']);?>" title="edit"><i class="btn btn-primary bi bi bi-pencil-fill"></i></a>
+                        <form action="<?= site_url('hapus-user/' . $k['id_user']); ?>" method="POST" class="d-inline">
+                        <?= csrf_field(); ?>
+                        <button type="submit" class="btn btn-danger bi bi bi-trash-fill" id="hapusUser"
+                        data-id="<?= $k['id_user']; ?>" onclick="confirm('Yakin');" ></button>
+                        
+                        </form>
                     </td>
                   </tr>
                    <?php 
                    }
                   } 
 
-        ?>
-        </tr>
+                    ?>
+                 </tr>
                 </tbody>
-              
+              </table>
             </div>
           </div>
 

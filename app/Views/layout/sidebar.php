@@ -61,7 +61,7 @@
   </li><!-- End Tables Nav -->
 <?php endif; ?>
 
-<?php if (session()->get('level') == 'admin') : ?>
+<?php if (session()->get('level') == 'kasir') : ?>
   <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#laporan-nav" data-bs-toggle="collapse" href="#">
       <i class="bi bi-cart-check-fill"></i><span>Laporan</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -69,7 +69,7 @@
     <ul id="laporan-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
       <li>
         <a href="<?= site_url('laporan'); ?>">
-          <i class="bi bi-circle"></i><span>Laporan Produk</span>
+          <i class="bi bi-circle"></i><span>Laporan Stok</span>
         </a>
       </li>
     </ul>
@@ -86,6 +86,15 @@
 <?php endif; ?>
 
 
+
+  <?php if (session()->get('level') == 'kasir') : ?>
+  <li class="nav-item">
+    <a class="nav-link collapsed" href="
+          <i class=" bi bi-grid"></i>
+      <span>Dashboard</span>
+    </a>
+  </li><!-- End Dashboard Nav -->
+<?php endif; ?>
 
 <?php if (session()->get('level') == 'admin') : ?>
   <li class="nav-item">

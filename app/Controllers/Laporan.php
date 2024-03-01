@@ -19,4 +19,16 @@ class Laporan extends BaseController
         return view('laporan/data-laporan', $data);
         //
     }
+
+    public function dataLaporanPenjualan()
+    
+    {
+        $data = [
+            'listLaporan' =>$this->penjualan->getPenjualan()
+
+        ];
+        return view('laporan/data-laporanpenjualan', $data);
+        //
+    }
+
 }

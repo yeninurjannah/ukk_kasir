@@ -54,6 +54,11 @@ class Mpenjualan extends Model
        return $code;
 
     }
+    public function getLaporanPenjualan(){
+        $penjualan = NEW MPenjualan;
+        $queryPenjualan=$penjualan->query("CALL sp_lihat_laporan()")->getResult();
+        return $queryPenjualan;
+    }
 
     public function getPenjualan(){
         $produk = NEW Mproduk();
@@ -96,5 +101,12 @@ return $query['total'];
 return 0;
 }
 }
+
+public function getPendapatanHarian()
+    {
+        $today = date('Y-m-d');
+        return $this->where('DATE(tgl_penjualan)', $today)->select('SUM(total) AS pendapatan_harian')->get()->getRow()->pendapatan_harian;
+    }
+
 
 }

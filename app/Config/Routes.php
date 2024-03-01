@@ -5,36 +5,43 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
+// login dan logout
 $routes->get('/', 'User::login');
-$routes->get('/dashboard-admin', 'User::index');
 $routes->post('/login', 'User::prosesLogin');
 $routes->get('/logout', 'User::logout');
 $routes->get('/data-user', 'User::dataUser');
-$routes->get('/data-kategori', 'Kategori::dataKategori');
-$routes->get('/data-produk', 'Produk::dataProduk');
-$routes->get('/data-satuan', 'Satuan::dataSatuan');
-$routes->get('/Penjualan', 'Penjualan::tambahPenjualan');
+
+// dashboard
+$routes->get('/dashboard-admin', 'User::index');
+
+$routes->get('/dashboard-admin', 'User::dashboard-admin');
+
+
+
 
 
 //kategori
+
+$routes->get('/data-kategori', 'Kategori::dataKategori');
 $routes->post('/simpanKategori', 'Kategori::simpanKategori');
 $routes->get('/tambahkategori', 'Kategori::tambahKategori');
-$routes->get('/hapus-kategori/(:num)', 'Kategori::hapusKategori/$1');
+$routes->post('/hapus-kategori/(:num)', 'Kategori::hapusKategori/$1');
 $routes->get('/edit-kategori/(:num)', 'Kategori::editKategori/$1');
 $routes->post('/updatekategori', 'Kategori::Updatekategori');
 $routes->get('/cek-kategori-digunakan/(:segment)', 'Kategori::cek_keterkaitan_data/$1');
 
 // satuan
-
+$routes->get('/data-produk', 'Produk::dataProduk');
 $routes->post('/simpan-satuan', 'Satuan::simpanSatuan');
 $routes->get('/tambahsatuan', 'Satuan::tambahSatuan');
 $routes->get('/data-satuan', 'Satuan::dataSatuan');
-$routes->get('/hapus-satuan/(:num)', 'Satuan::hapusSatuan/$1');
+$routes->post('/hapus-satuan/(:num)', 'Satuan::hapusSatuan/$1');
 $routes->get('/edit-satuan/(:num)', 'Satuan::editSatuan/$1');
 $routes->post('/updatesatuan', 'Satuan::Updatesatuan');
 $routes->get('/cek-satuan-digunakan/(:segment)', 'Satuan::cek_keterkaitan_data/$1');
 
 // produk
+$routes->get('/data-satuan', 'Satuan::dataSatuan');
 $routes->post('/simpan-produk', 'Produk::simpanProduk');
 $routes->get('/tambah-produk', 'Produk::tambahProduk');
 $routes->get('/hapus-produk/(:num)', 'Produk::hapusProduk/$1');
@@ -45,7 +52,7 @@ $routes->delete('/produk/(:num)', 'Produk::delete/$1');
 // user
 $routes->post('/simpan-user', 'User::simpanUser');
 $routes->get('/tambah-user', 'User::tambahUser');
-$routes->get('/hapus-user/(:num)', 'User::hapusUser/$1');
+$routes->post('/hapus-user/(:num)', 'User::hapusUser/$1');
 $routes->get('/edit-user/(:num)', 'User::editUser/$1');
 $routes->post('/update-user', 'User::updateuser');
 
@@ -61,10 +68,14 @@ $routes->get('/pembayaran','Penjualan::simpanPembayaran');
 
 //laporan
 $routes->get('/laporan', 'Laporan::dataLaporan');
+$routes->get('/laporan', 'Laporan::dataLaporanPenjualan');
 
 
 //cetak
 $routes->get('/pdf', 'PdfController::index');
 $routes->get('/pdf/generate', 'PdfController::generate');
+
+$routes->get('/pdf', 'PdfController::index');
+$routes->get('/pdf/generate-penjualan', 'PdfController::generatePenjualan');
 
 

@@ -24,7 +24,7 @@
         Waktu : <?php echo date("h:i:sa"); ?>
       </text>&emsp; &emsp; &emsp; &emsp; &emsp;
       <text disabled>
-        Kasir : <?= session()->get('nama_user'); ?>
+        Kasir : <?= session()->get('username'); ?>
       </text>&emsp; &emsp; &emsp; &emsp; &emsp;
       </text>
     </div>
@@ -32,7 +32,7 @@
       <!-- Floating Labels Form -->
       <form class="row g-3" action="<?= site_url('transaksi-penjualan'); ?>" method="POST">
         <?= csrf_field(); ?>
-        <input type="hidden" value="<?= $noFaktur?>" name="no_faktur">
+        <input type="hidden" value="<?= $noFaktur ?>" name="no_faktur">
         <div class="col-md-6">
           <div class="form-floating">
             <label for="namaProduk"></label>
@@ -47,58 +47,50 @@
             </select>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div class="form-floating">
             <input type="text" class="form-control" name="txtqty">
             <label for="floatingName">Jumlah Produk</label>
           </div>
         </div>
-        <div class="text-end">
-          <button type="sumbit" class="btn sm btn-succes"><i class="bi bi-cart-fill"></i></button>
-        </div>
-<div class="col-md-12"> 
-        <table  class="table table-sm table-striped table-bordered text-center">
-                <thead>
-                 <tr>
+        <div class="card-footer text-end">
+                      <button type="submit" class="btn btn-primary"> <i class="bi bi-cart-fill"></i></button>
+                    </div>
+        <div class="col-md-12">
+          <table class="table table-sm table-striped table-bordered text-center">
+            <thead>
+              <tr>
                 <th>No</th>
                 <th>Nama Barang</th>
                 <th>Jumlah</th>
                 <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php if (isset($detailPenjualan) && !empty($detailPenjualan)) :
+                $no = 1;
+                foreach ($detailPenjualan as $detail) : ?>
+                  <tr>
+                    <td><?= $no++; ?></td>
+                    <td><?= $detail['nama_produk']; ?></td>
+                    <td><?= $detail['qty']; ?></td>
+                    <td><?= number_format($detail['total_harga'], 0, ',', '.'); ?></td>
+                  </tr>
+                <?php endforeach;
+              else : ?>
+                <tr>
+                  <td colspan="4">Tidak ada produk</td>
                 </tr>
-                </thead>
-                <tbody>
-                <?php if(isset($detailPenjualan) && !empty($detailPenjualan)) :
-    $no = 1;
-    foreach ($detailPenjualan as $detail) : ?>
-    <tr>
-        <td><?= $no++; ?></td>
-        <td><?= $detail['nama_produk']; ?></td>
-        <td><?= $detail['qty']; ?></td>
-        <td><?= number_format($detail['total_harga'], 0, ',', '.'); ?></td>
-    </tr>
-<?php endforeach;
-else: ?>
-    <tr>
-        <td colspan="4">Tidak ada produk</td>
-    </tr>
-<?php endif; ?>
-              </tbody>
-                 </table>
-                  </div>
-                <div class="col">
-                  <div class="card">
-                    <div class="card-header">
-                      <h3 class="card-title">TOTAL : RP <?= number_format($totalHarga, 0, ',', '.'); ?></h3>
-                    </div>
+              <?php endif; ?>
+            </tbody>
+          </table>
+        </div>
+        <!-- Table with stripped rows -->
 
-      </form>
-
-      <!-- Table with stripped rows -->
-     
     </div>
   </div>
 </div>
-
+              </form>
 
 
 <!-- form penjualan -->
@@ -108,57 +100,71 @@ else: ?>
     <div class="row g-3">
       <div class="col-md-4">
         <div class="form-floating">
-          <input type="text" class="form-control" id="floatingName" name="total" value="<?= number_format($totalHarga, 0, ',', '.'); ?>">
+          <input type="text" class="form-control" id="floatingName" value="<?= number_format($totalHarga, 0, ',', '.'); ?>" id="total" name="total">
           <label for="floatingName">Total : </label>
         </div>
       </div>
       <div class="col-md-4">
         <div class="form-floating">
-          <input type="text" class="form-control" id="floatingName" name="bayar">
-          <label for="floatingName">Bayar</label>
+          <input type="text" class="form-control" id="txtbayar" name="txtbayar">
+          <label for="floatingName">Bayar </label>
         </div>
       </div>
       <div class="col-md-4">
         <div class="form-floating">
-          <input type="text" class="form-control" id="floatingName" name="kembalian">
-          <label for="floatingName">Kembalian</label>
+          <input type="text" class="form-control" id="kembali" name="kembali" readonly>  
+          <label for="floatingName">Kembali</label>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+      <div class="card-footer text-end">
+                      <button id="btnBayar" type="submit" class="btn btn-primary" onclick="redirectToRoute()">Bayar</button>
+                   
+            
+                    </div>
+                    
+
+  
 </div> <!--end form penjualan -->
 
 </div>
 </div>
 </section>
+</main><!-- End #main -->
+<script>
+  
+    function redirectToRoute() {
+        window.location.href = '<?= site_url('pembayaran') ?>';
+    }
+</script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Ambil elemen-elemen yang diperlukan
-    var txtBayar = document.getElementById('txtbayar');
-    var kembali = document.getElementById('kembali');
-    var totalHarga = <?= $totalHarga ?>; // Ambil total harga dari controller dan diteruskan ke view
+    document.addEventListener('DOMContentLoaded', function() {
+        // Ambil elemen-elemen yang diperlukan
+        var txtBayar = document.getElementById('txtbayar');
+        var btnBayar = document.getElementById('btnBayar');
+        var kembali = document.getElementById('kembali');
+        var totalHarga = <?= $totalHarga ?>; // Ambil total harga dari controller dan diteruskan ke view
 
-    // Tambahkan event listener untuk memantau perubahan pada input bayar
-    txtBayar.addEventListener('input', function() {
-      // Ambil nilai yang dibayarkan
-      var bayar = parseFloat(txtBayar.value);
+        btnBayar.disabled = true;
+        // Tambahkan event listener untuk memantau perubahan pada input bayar
+        txtBayar.addEventListener('input', function() {
+            // Ambil nilai yang dibayarkan
+            var bayar = parseFloat(txtBayar.value);
 
-      // Hitung kembaliannya
-      var kembalian = bayar - totalHarga;
+            // Hitung kembaliannya
+            var kembalian = bayar - totalHarga;
 
-      // Tampilkan kembaliannya pada input kembali
-      if (kembalian >= 0) {
-        kembali.value = kembalian.toFixed(2).replace(/(\.00)+$/, ''); // Menampilkan hingga 2 digit desimal
-      } else {
-        kembali.value = '0'; // Jika kembalian negatif, tampilkan '0.00'
-      }
+            // Tampilkan kembaliannya pada input kembali
+            if (kembalian >= 0) {
+                kembali.value = kembalian.toFixed(2).replace(/(\.00)+$/, ''); // Menampilkan hingga 2 digit desimal
+                btnBayar.disabled = false;
+            } else {
+               kembali.value = '0'; // Jika kembalian negatif, tampilkan '0.00'
+               btnBayar.disabled = true;
+             }
+        });
     });
-  });
 </script>
 
 
-
-</main><!-- End #main -->
 <?= $this->endSection(); ?>

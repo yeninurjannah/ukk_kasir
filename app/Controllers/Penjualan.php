@@ -88,7 +88,7 @@ class Penjualan extends BaseController
         session()->remove('IdPenjualan');
         
         // Mengarahkan pengguna kembali ke halaman transaksi penjualan
-        return redirect()->to('Penjualan');
+        return redirect()->to('transaksi-penjualan');
     }
   }
  

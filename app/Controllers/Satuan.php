@@ -23,6 +23,27 @@ class Satuan extends BaseController
      } 
      public function simpanSatuan()
      {
+        helper(['form']);
+        $validation = \config\Services::validation();
+        
+        $rules = [
+            'nama_satuan' => 'required|is_unique[tbl_satuan.nama_satuan]'
+        ];
+        
+        $messages = [
+            'nama_satuan' => [
+                'required' => 'Nama Satuan tidak boleh Kosong!!',
+                'is_unique' => 'Nama Satuan sudah Ada!!',
+            ],
+        ];
+        
+        // set validasi
+        $validation->setRules($rules, $messages);
+        
+        // cek validasi gagal
+        if(!$validation->withRequest($this->request)->run()) {
+            return redirect()->to('/data-satuan')->with('errors',$validation->getErrors());
+        }
         $data = [
             'nama_satuan'=> $this->request->getVar('nama_satuan')
         ];

@@ -86,4 +86,12 @@ public function getAllProduk(){
     return $queryproduk;
     }
     
+    public function getStokNol()
+    {
+        $produk = new Mproduk();
+        $produk->select('tbl_produk.kode_produk, tbl_produk.id_produk, tbl_produk.nama_produk, tbl_produk.harga_beli, tbl_produk.harga_jual, tbl_produk.stok');
+        $produk->where('tbl_produk.stok = 0');
+        return $produk->findAll();
+   
+    }
 }

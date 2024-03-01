@@ -65,4 +65,5 @@ public function getEnumValues()
     
     return $enum;
 }
+
 }

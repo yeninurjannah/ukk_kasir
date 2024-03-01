@@ -29,7 +29,8 @@
               <a href="<?= site_url('tambah-produk'); ?>" type="button" class="btn btn-primary">Tambah</a>
               </div>
               <!-- Table with stripped rows -->
-              <table class="table">
+              
+              <table class="table datatable">
                 <thead>
                   <tr>
                     <th scope="col">No</th>
@@ -58,7 +59,7 @@
                         <td><?= $k['harga_jual']?></td>
                         <td><?= $k['stok']?></td>
                         <td>
-                        <td>
+                        
                         <a href="<?= site_url('edit-produk/' . $k['id_produk']); ?>" class="bi bi-pencil-square btn btn-outline-primary"></a>
                       <form action="/produk/<?= $k['id_produk']; ?>" method="POST" class="d-inline">
                         <?= csrf_field(); ?>
@@ -66,7 +67,7 @@
                         <button type="submit" class=" btn btn-danger bi bi bi-trash-fill"
                           onClick="return confirm('Apakah anda yakin?');"></button>
                     </form>
-                    </td>
+                    </td> 
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
