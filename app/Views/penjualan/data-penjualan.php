@@ -21,7 +21,7 @@
         Tanggal : <?php echo date("d-m-y"); ?>
       </text>&emsp; &emsp; &emsp; &emsp; &emsp;
       <text disabled>
-        Waktu : <?php echo date("h:i:sa"); ?>
+        Waktu : <?php date_default_timezone_set('Asia/Jakarta'); echo date("h:i:sa"); ?>
       </text>&emsp; &emsp; &emsp; &emsp; &emsp;
       <text disabled>
         Kasir : <?= session()->get('username'); ?>

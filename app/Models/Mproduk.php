@@ -72,12 +72,13 @@ public function getStok()
     tbl_produk.harga_jual, tbl_produk.harga_beli,
     tbl_produk.stok');
     $produk->orderBy('tbl_produk.stok', 'ASC');
+    $produk->where('tbl_produk.stok > -1');
     return $produk->findALL();
 }
 public function getLaporanproduk(){
     $produk = NEW Mproduk;
     
-    $queryProduk=$produk->query("CALL lihat_laporan()")->getResult();
+    $queryProduk=$produk->query("CALL sp_lihat_laporan()")->getResult();
     return $queryProduk;
 }
 public function getAllProduk(){
